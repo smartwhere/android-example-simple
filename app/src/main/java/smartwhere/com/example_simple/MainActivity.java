@@ -1,13 +1,26 @@
 package smartwhere.com.example_simple;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
+
+import com.proximity.library.Action;
+import com.proximity.library.NameValuePair;
+import com.proximity.library.ProximityControl;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +39,23 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+
+        /* optionally add receiver for custom actions */
+        LocalBroadcastManager.getInstance(this).registerReceiver(mCustomActionReceiver,
+                new IntentFilter("custom-proximity-action"));
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+	/* optionally start proximity service to make sure it is running.
+	* if SERVICE_AUTO_START = true in your ProximityConfiguration class, the service will
+	* autostart on coldboot, user_present or power changes.
+	* If it is set to false, then you will need to start and stop the service as desired.
+	*/
+        ProximityControl.startService(getApplicationContext());
     }
 
     @Override
@@ -49,4 +79,48 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    /* example implementation of custom action receiver */
+    private BroadcastReceiver mCustomActionReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String object_type = (intent.hasExtra("object_type") ? intent.getStringExtra("object_type") : "");
+            String state = (intent.hasExtra("state") ? intent.getStringExtra("state") : "0");
+            if (intent.hasExtra("action")) {
+                Action action = (Action) intent.getSerializableExtra("action");
+                int action_type = action.getType();
+                /* action_type will be 127 (Custom Action)
+                * loop through name/value pairs to get the data
+                * i.e. employee_id
+                * and order_id
+                * */
+                List<NameValuePair> nvps = action.getNameValues();
+                for (NameValuePair nvp : nvps) {
+                    String name = nvp.getName();
+                    String value = nvp.getValue();
+                }
+            }
+        }
+    };
+
+    /* optionally trap communication errors.  */
+    private BroadcastReceiver mCommunicationsErrorReceiver = new BroadcastReceiver() {
+        @Override
+
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+
+            if(intent.hasExtra("error")) {
+                Throwable error = (Throwable) intent.getSerializableExtra("error");
+                Log.i("my tag", "Communication Error received.  Error message = " + error.getMessage());
+                Toast.makeText(context, "Communication Error received: " + error.getMessage(), Toast.LENGTH_LONG).show();
+            } else if(intent.hasExtra("no_content")) {
+                String code = intent.getStringExtra("no_content");
+                Toast.makeText(context,"No content found for tag "+code, Toast.LENGTH_LONG).show();
+            }
+
+        }
+    };
 }
+
+

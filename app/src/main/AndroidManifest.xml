@@ -18,6 +18,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- TODO: make sure to add replace the xxxxxx below with the application id used in encoding the NFC tags -->
+        <activity
+            android:name="com.proximity.library.ProximityActivity"
+            android:launchMode="singleTop" >
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="http" android:host="ntag.co"  android:pathPattern="/xxxxxx/.*" />
+                <data android:scheme="http" android:host="www.ntag.co"  android:pathPattern="/xxxxxx/.*" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
