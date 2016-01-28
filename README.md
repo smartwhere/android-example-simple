@@ -1,4 +1,4 @@
-#example-simple
+#android-simple-example
 
 This Android Studio project represents a very simple implementation of the Smartwhere Proximity SDK.
 
