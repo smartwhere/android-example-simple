@@ -41,9 +41,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        /* optionally add receiver for custom actions */
-        LocalBroadcastManager.getInstance(this).registerReceiver(mCustomActionReceiver,
-                new IntentFilter("custom-proximity-action"));
+        /* optionally add receiver for communication errors */
+        LocalBroadcastManager.getInstance(this).registerReceiver(mCommunicationsErrorReceiver,
+                new IntentFilter("communication-error-action"));
+
 
     }
 
@@ -95,9 +96,11 @@ public class MainActivity extends AppCompatActivity {
                 * and order_id
                 * */
                 List<NameValuePair> nvps = action.getNameValues();
-                for (NameValuePair nvp : nvps) {
-                    String name = nvp.getName();
-                    String value = nvp.getValue();
+                if(nvps != null) {
+                    for (NameValuePair nvp : nvps) {
+                        String name = nvp.getName();
+                        String value = nvp.getValue();
+                    }
                 }
             }
         }
@@ -121,6 +124,8 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
+
+
 }
 
 

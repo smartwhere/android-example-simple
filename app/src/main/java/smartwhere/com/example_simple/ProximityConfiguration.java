@@ -30,13 +30,13 @@ public class ProximityConfiguration {
    public static final boolean SERVICE_AUTO_START = true;
 
 
-   // update geofences from server defaults to every 20 minutes
+   // update geofences from server  every 60 minutes
    // note: as of version 15160 updates are based upon movement.
    // this is used as the maximum time if the device does not move
-    public static final long GEOFENCE_UPDATE_TIME = DateUtils.HOUR_IN_MILLIS * 1;
+    public static final long GEOFENCE_UPDATE_TIME = DateUtils.HOUR_IN_MILLIS * 60;
 
 
-    // frequency of  wifi network list updates from server defaults to 20 minutes
+    // frequency of  wifi network list updates from server every 60 minutes
     public static final long WIFI_UPDATE_TIME = DateUtils.MINUTE_IN_MILLIS * 60;
 
     // The Time To Live (TTL) settings are cache times for events.  If you are using
@@ -52,6 +52,8 @@ public class ProximityConfiguration {
     // have BLE Scanning defined as enabled
     public static final long BEACON_SCAN_INTERVAL = DateUtils.SECOND_IN_MILLIS * 30;
     public static final long BEACON_SCAN_DURATION = DateUtils.SECOND_IN_MILLIS * 3;
+
+    public static final String CUSTOM_ACTION_ACTIVITY = "smartwhere.com.example_simple.ProximityCustomActionActivity";
 
 
 }

@@ -29,6 +29,11 @@
                 <data android:scheme="http" android:host="www.ntag.co"  android:pathPattern="/xxxxxx/.*" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ProximityCustomActionActivity"
+            android:label="@string/title_activity_proximity_custom_action_dialog"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
     </application>
 
 </manifest>
