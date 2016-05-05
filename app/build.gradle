@@ -33,5 +33,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
     compile 'com.google.android.gms:play-services-location:8.3.0'
-    compile name:'proximity_sdk-smartwhere-release_16060',ext:'aar'
+    compile name:'proximity_sdk-smartwhere-release_16124',ext:'aar'
 }
