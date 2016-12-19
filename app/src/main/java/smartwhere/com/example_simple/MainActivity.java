@@ -1,12 +1,16 @@
 package smartwhere.com.example_simple;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -23,6 +27,8 @@ import com.proximity.library.ProximityControl;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static final int PERMISSION_REQUEST_FINE_LOCATION = 10001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +50,12 @@ public class MainActivity extends AppCompatActivity {
         /* optionally add receiver for communication errors */
         LocalBroadcastManager.getInstance(this).registerReceiver(mCommunicationsErrorReceiver,
                 new IntentFilter("communication-error-action"));
+
+        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_FINE_LOCATION);
+            }
+        }
 
 
     }

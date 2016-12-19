@@ -2,12 +2,12 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
         applicationId "smartwhere.com.example_simple"
         minSdkVersion 18
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
     }
@@ -32,6 +32,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
-    compile 'com.google.android.gms:play-services-location:8.3.0'
-    compile name:'proximity_sdk-smartwhere-release_16124',ext:'aar'
+    compile 'com.google.android.gms:play-services-location:10.0.1'
+    compile name:'proximity_sdk-smartwhere-release.16351_1',ext:'aar'
 }
