@@ -20,8 +20,7 @@ android {
 }
 
 repositories {
-    mavenCentral()
-    mavenLocal()
+    jcenter()
     flatDir {
         dirs 'libs'
     }
@@ -33,5 +32,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
     compile 'com.google.android.gms:play-services-location:10.0.1'
-    compile name:'proximity_sdk-smartwhere-release.16354_1',ext:'aar'
+    /* North American Servers */
+    compile 'com.smartwhere:android-sdk:16364.2'
+    /* European Union Servers */
+    //compile 'com.smartwhere:android-eu-sdk:16364.2'
 }

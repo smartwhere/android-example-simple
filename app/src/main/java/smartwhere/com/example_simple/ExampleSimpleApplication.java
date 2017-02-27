@@ -12,9 +12,9 @@ public class ExampleSimpleApplication extends Application {
     // Called when the application is starting, before any other application objects have been created.
     // Overriding this method is totally optional!
 
-    private static final String PROXIMITY_API_KEY = "192607";
-    private static final String PROXIMITY_API_SECRET = "nxj9tkkqltp";
-    private static final String PROXIMITY_APPLICATION_ID = "2917694";
+    private static final String PROXIMITY_API_KEY = "XXXXXXX";
+    private static final String PROXIMITY_API_SECRET = "XXXXXXX";
+    private static final String PROXIMITY_APPLICATION_ID = "XXXXXXX";
 
     @Override
     public void onCreate() {

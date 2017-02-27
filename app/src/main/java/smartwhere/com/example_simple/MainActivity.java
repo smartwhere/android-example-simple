@@ -24,11 +24,13 @@ import com.proximity.library.Action;
 import com.proximity.library.NameValuePair;
 import com.proximity.library.ProximityControl;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final int PERMISSION_REQUEST_FINE_LOCATION = 10001;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +49,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        /* optionally add receiver for communication errors */
-        LocalBroadcastManager.getInstance(this).registerReceiver(mCommunicationsErrorReceiver,
-                new IntentFilter("communication-error-action"));
+
+        /* example of how to ask for location permissions if you have permission permissions disabled
+            In the application class ExampleSimpleApplication, we have configured the proximity SDK NOT to prompt for permission
+            so that we can handle it ourselves...
+            Normally, you would put this logic somewhere within your application where prompting for location permission makes sense.
+         */
 
         if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -63,8 +68,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+
+
 	/* optionally start proximity service to make sure it is running.
-	* if SERVICE_AUTO_START = true in your ProximityConfiguration class, the service will
+	* if SERVICE_AUTO_START = true in your Proximity configuration (which is the default), the service will
 	* autostart on coldboot, user_present or power changes.
 	* If it is set to false, then you will need to start and stop the service as desired.
 	*/
@@ -92,51 +100,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-    /* example implementation of custom action receiver */
-    private BroadcastReceiver mCustomActionReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String object_type = (intent.hasExtra("object_type") ? intent.getStringExtra("object_type") : "");
-            String state = (intent.hasExtra("state") ? intent.getStringExtra("state") : "0");
-            if (intent.hasExtra("action")) {
-                Action action = (Action) intent.getSerializableExtra("action");
-                int action_type = action.getType();
-                /* action_type will be 127 (Custom Action)
-                * loop through name/value pairs to get the data
-                * i.e. employee_id
-                * and order_id
-                * */
-                List<NameValuePair> nvps = action.getNameValues();
-                if(nvps != null) {
-                    for (NameValuePair nvp : nvps) {
-                        String name = nvp.getName();
-                        String value = nvp.getValue();
-                    }
-                }
-            }
-        }
-    };
-
-    /* optionally trap communication errors.  */
-    private BroadcastReceiver mCommunicationsErrorReceiver = new BroadcastReceiver() {
-        @Override
-
-        public void onReceive(Context context, Intent intent) {
-            // Get extra data included in the Intent
-
-            if(intent.hasExtra("error")) {
-                Throwable error = (Throwable) intent.getSerializableExtra("error");
-                Log.i("my tag", "Communication Error received.  Error message = " + error.getMessage());
-                Toast.makeText(context, "Communication Error received: " + error.getMessage(), Toast.LENGTH_LONG).show();
-            } else if(intent.hasExtra("no_content")) {
-                String code = intent.getStringExtra("no_content");
-                Toast.makeText(context,"No content found for tag "+code, Toast.LENGTH_LONG).show();
-            }
-
-        }
-    };
-
 
 }
 
