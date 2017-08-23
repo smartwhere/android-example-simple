@@ -4,7 +4,7 @@ This Android Studio project represents a very simple implementation of the Smart
 
 **The Proximity Configuration hashap in the ExampleSimpleApplication.java class must be modified to reflect the target account values for the application id, api key and secret values.  These values are available on the web administrator under section Admin -> Account Information _You must be an account administrator to view these values_**
 
-**Now there are two JCenter SDKs - one for the north american servers and the other for our EU servers in Germany**
+**Now there are two JCenter SDKs - one for the north american servers and the other for our servers in the EU **
 
 The default is for north american, but you can switch the build.gradle to select between the correct sdk version and remove the unused SDK
 
